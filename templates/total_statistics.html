@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block scripts %}
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/data.js"></script>
+    <script src="https://code.highcharts.com/modules/series-label.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+{% endblock %}
+{% block body %}
+    <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+{% endblock %}
+<style type="text/css">
+    .chart {
+        min-width: 320px;
+        max-width: 800px;
+        height: 220px;
+        margin: 0 auto;
+    }
+</style>
+<!-- http://doc.jsfiddle.net/use/hacks.html#css-panel-hack -->
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<style>
+</style>
+{% block js %}
+    <script type="application/javascript">
+
+        function requestData() {
+            $.ajax({
+                url: '{% url 'user_details' 'takip' %}',
+                type: "GET",
+                success: function (data) {
+                    var options = {
+                        chart: {
+                            type: 'column'
+                        },
+                        xAxis: {
+                            type: 'category'
+                        },
+                        series: [
+                            {
+                                'name': 'User Rates',
+                                colorByPoint: true,
+                                data:data
+                            }
+                        ]
+                    };
+                    Highcharts.chart('container', options);
+                },
+            })
+        }
+
+        requestData();
+
+    </script>
+{% endblock %}
