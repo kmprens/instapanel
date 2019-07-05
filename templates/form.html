@@ -1,36 +1,38 @@
 {% extends 'base.html' %}
 
 {% block body %}
-<center>
-<form METHOD="POST">
-        {% csrf_token %}
- <div style="border: inset;width:50% ; margin:20px" >
+    <center>
+        <form METHOD="POST">
+            {% csrf_token %}
+            <div style="border: inset;width:50% ; margin:20px">
 
-<div class="card text-center">
-  <div class="card-header">
-  </div>
-  <div class="card-body">
-      <HR>
-      <p class="card-text"><div class="alert alert-info" role="alert">
-      <b><h3>YENİ KULLANICI KAYIT FORMU</h3></b>
-        <br>
-      {{form.as_p}} <br>
-      <button type="submit" class="btn btn-danger">KULLANICI KAYDET</button>
-        </div></p>
-        </div>
-         <hr>
+                <div class="card text-center">
+                    <div class="card-header">
+                    </div>
+                    <div class="card-body">
+                        <HR>
+                        <p class="card-text">
+                        <div class="alert alert-info" role="alert">
+                            <b><h3>YENİ KULLANICI KAYIT FORMU</h3></b>
+                            <br>
+                            {{ form.as_p }} <br>
+                            <button type="submit" class="btn btn-danger">KULLANICI KAYDET</button>
+                        </div>
+                        </p>
+                    </div>
+                    <hr>
 
-  <div class="card-footer text-muted">
-      <div class="alert alert-danger" role="alert">  {{uyarı}}<br>
-      <h6>Lütfen İnstagram hesabını "Kullanıcı Adı" bölümü tam bir şekilde giriniz...<br>
-    Girilen kullanıcı adı veritabanı havuzuna kaydedilir, veriler her gün güncellenir.</h6>
+                    <div class="card-footer text-muted">
+                        <div class="alert alert-danger" role="alert">  {{ uyarı }}<br>
+                            <h6>Lütfen İnstagram hesabını "Kullanıcı Adı" bölümü tam bir şekilde giriniz...<br>
+                                Girilen kullanıcı adı veritabanı havuzuna kaydedilir, veriler her gün güncellenir.</h6>
 
-      </div>
+                        </div>
 
-      <br><br><br>
-  </div>
-</div>
-    </div>
- </form>
-</center>
+                        <br><br><br>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </center>
 {% endblock %}
