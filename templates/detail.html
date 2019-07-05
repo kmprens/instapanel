@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<table class="table table-hover table-dark">
+    <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Kullanıcı Adı</th>
+        <th scope="col">Takipçi</th>
+        <th scope="col">Takip</th>
+        <th scope="col">Gönderi Sayısı</th>
+    </tr>
+
+  </thead>
+<tbody>
+
+<td><center></center><img src="{{ list.profilresmi }}" class="img-circle" alt="Cinque Terre" width="50px"></center></td>
+<td>{{ list.kuladi }}</td>
+<td>{{ list.takipci }}</td>
+    <td>{{ list.takip }}</td>
+    <td>{{ list.paylasim }}</td>
+    <td>{{ list.kaydetmetarihi }}</td>
+
+</tbody>
+{% endblock %}

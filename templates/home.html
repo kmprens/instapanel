@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<center><div class="alert alert-info" role="alert"><h4>VERİTABANI HAVUZUNA KAYITLI KULLANICILAR</h4></div></center>
+<table class="table table-hover table-dark">
+    <thead>
+
+    <tr>
+      <th scope="col">#</th>
+ <th scope="col">Profil</th>
+        <th scope="col">Kullanıcı Adı</th>
+    </tr>
+  </thead>
+{% for listing in lists %}
+<tbody>
+ <th scope="row" width="5%" >{{forloop.counter0 }}</th>
+  <td width="5%">
+      <img src="{{ listing.profilresmi }}" class="img-circle" alt="Cinque Terre" width="50"></td>
+ <td width="40%">{{ listing.prikuladi }}</td>
+ <td width="10%"> <a href="{{listing.get_delete_url}}" class="btn btn-danger">Sil</a></td>
+</tbody>
+
+{% endfor %}
+</table>
+
+{% endblock %}

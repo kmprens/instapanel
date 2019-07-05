@@ -1,0 +1,53 @@
+<nav class="navbar navbar-default   navbar-fixed-top" role="banner">
+
+        <div class="navbar-header">
+
+            <!-- Telefon ekranları için menü butonu -->
+            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+            <!-- İsim Soyisim veya Marka İsmi -->
+            <a href="{% url 'home' %}" class="navbar-brand">İnstaLannn</a>
+        </div>
+
+        <nav class="collapse navbar-collapse" role="navigation">
+            <!-- Arama Çubuğu -->
+            <form class="navbar-form navbar-left" role="search" method="GET" action="">
+                <!-- Datepicker as text field -->
+                          <div class="input-group date" data-date-format="dd.mm.yyyy">
+                            <input  type="date" name="d" value="{{request.GET.d}}" class="form-control" placeholder="Bitiş Tarihi">
+                            <div class="input-group-addon" >
+                              <span class="glyphicon glyphicon-th">BaşlangıçTarihi</span>
+                            </div>
+                          </div>
+                 <div class="input-group date" data-date-format="dd.mm.yyyy">
+                            <input  type="date" name="d2" value="{{request.GET.d2}}" class="form-control" placeholder="Bitiş Tarihi">
+                            <div class="input-group-addon" >
+                              <span class="glyphicon glyphicon-th">BitişTarihi</span>
+                            </div>
+                          </div>
+                <div class="input-group">
+                    <input class="form-control" type="text" name="q" placeholder="Kullanıcı Ara" value="{{request.GET.q}}" >
+                    <span class="input-group-btn">
+                        <input class="btn btn-default" type="submit" value="Ara">
+                    </span>
+                </div>
+
+            </form>
+
+            <!-- Temel Sayfalar -->
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="{% url 'home' %}">Anasayfa</a></li>
+                <li><a href="{% url 'index' %}">Liste</a></li>
+                <li><a href="{% url 'create' %}">Yeni Kayıt</a></li>
+                <li><a href="{% url 'istatistik'%}">İstatistik</a></li>
+            </ul>
+
+        </nav>
+
+    </div>
+</nav>
