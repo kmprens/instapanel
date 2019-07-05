@@ -1,7 +1,5 @@
-from django.shortcuts import render,HttpResponse
+from django.shortcuts import render, HttpResponse
 from list.models import Insta
-
-
 
 
 def homeview(request):
