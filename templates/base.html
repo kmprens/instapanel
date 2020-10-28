@@ -3,22 +3,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" name="viewport" content="width=device-width, inital-scale=1">
-   <title>{% block title %}İnstaLannn!{% endblock %}</title>
+    <meta charset="UTF-8" name="viewport" content="width=device-width">
+    <title>{% block title %}İnstaLannn!{% endblock %}</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-
 </head>
-<body>
 
-    {% include 'header.html' %}
-
-    {% block body %}
-
-    {% endblock %}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js">
 </script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+{% block scripts %}
+{% endblock %}
+
+
+{% include 'header.html' %}
+<body>
+{% block body %}
+
+{% endblock %}
+{% block js %}
+{% endblock %}
 </body>
 </html>

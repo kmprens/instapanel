@@ -1,46 +1,48 @@
-from django.shortcuts import render, HttpResponse , redirect, HttpResponseRedirect ,get_object_or_404
+from django.http import JsonResponse
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Insta
 from bs4 import BeautifulSoup as bs
-import requests, re
+import requests
+import re
 from .forms import ListForm
-from django.db.models import Q
-import matplotlib.pyplot as plt
 
 
 # Create your views here.
 
-def listindex(request):
-    lists=Insta.objects.all()
-    query=request.GET.get('q')
-    date1=request.GET.get('d')
-    date2=request.GET.get('d2')
+def list_index(request):
+    lists = Insta.objects.all()
+    query = request.GET.get('q')
+    date1 = request.GET.get('d')
+    date2 = request.GET.get('d2')
     if date1 and date2:
-        lists = lists.filter(kaydetmetarihi__gte=date1,kaydetmetarihi__lte=date2)
+        lists = lists.filter(kaydetmetarihi__gte=date1, kaydetmetarihi__lte=date2)
 
     if query:
-        lists=lists.filter(kuladi__icontains=query)
+        lists = lists.filter(kuladi__icontains=query)
     context = {
         'lists': lists,
     }
-    return render(request,'listindex.html',context)
+    return render(request, 'listindex.html', context)
+
 
 def listdetail(request, id):
     list = get_object_or_404(Insta, id=id)
-    context={
+    context = {
         'list': list
 
     }
     return render(request, 'detail.html', context)
 
-def listcreate(request):
-    uyarı = ' '
-    if request.method=="POST":
-        form=ListForm(request.POST)
+
+def list_create(request):
+    uyari = ' '
+    if request.method == "POST":
+        form = ListForm(request.POST)
         ins = Insta.objects.all()
         posts = Insta()
         if form.is_valid():
             if Insta.objects.filter(kuladi=request.POST.get('kuladi')):
-                uyarı = "BU KULLANICI ZATEN VERİTABANI HAVUZUNDA KAYITLIDIR."
+                uyari = "BU KULLANICI ZATEN VERİTABANI HAVUZUNDA KAYITLIDIR."
             else:
                 url = 'https://www.instagram.com/' + request.POST.get('kuladi')
                 print(url)
@@ -59,9 +61,6 @@ def listcreate(request):
                 takipci = re.findall("\d+\S+", liste[1])
                 takip = re.findall("\d+", liste[3])
                 post = re.findall("\d+\S+", liste[5])
-
-
-
 
                 # ---------------------------------------------------------------------------
                 kkontrol = ''
@@ -116,66 +115,71 @@ def listcreate(request):
                 posts.kuladi = request.POST.get('kuladi')
                 posts.prikuladi = request.POST.get('kuladi')
                 posts.paylasim = int(kpost)
-                posts.profilresmi=kkontrol
+                posts.profilresmi = kkontrol
                 posts.save()
                 return redirect('index')
 
     else:
-        form=ListForm()
+        form = ListForm()
 
+    context = {
 
-
-    context={
-
-        'form':form,
-        'uyarı': uyarı,
+        'form': form,
+        'uyari': uyari,
 
     }
     return render(request, 'form.html', context)
 
 
-
-def listdelete(request,id):
+def list_delete(request, id):
     list = get_object_or_404(Insta, id=id)
     list.delete()
     return redirect('index')
+
 
 # -------------------------------------------------------------
 def istatistik(request):
     ins = Insta.objects.all()
     a = max(int(x.takipci) for x in ins)
-    list = get_object_or_404(Insta,takipci=a)
-    b=max(int(x.takip) for x in ins)
-    lists = get_object_or_404(Insta,takip=b)
-    c=max(int(x.paylasim) for x in ins)
-    listss = get_object_or_404(Insta,paylasim=c)
+    list = get_object_or_404(Insta, takipci=a)
+    b = max(int(x.takip) for x in ins)
+    lists = get_object_or_404(Insta, takip=b)
+    c = max(int(x.paylasim) for x in ins)
+    listss = get_object_or_404(Insta, paylasim=c)
     filtre = ins.filter(kuladi__icontains="baybilinen")
 
     for x in filtre:
-        filtre=[x]
+        filtre = [x]
     for yaz in filtre:
         print(yaz.kaydetmetarihi)
 
+    context = {
 
-
-
-
-
-    context={
-
-        'enyuksek':a,
-        'eytakip':b,
-        'eypaylasim':c,
-        'list':list,
+        'enyuksek': a,
+        'eytakip': b,
+        'eypaylasim': c,
+        'list': list,
         'lists': lists,
         'listss': listss,
-        'filtre':filtre,
+        'filtre': filtre,
 
     }
-
 
     return render(request, 'istatistik.html', context)
 
 
+def get_statistic_by_user(request, type):
+    from django.db.models import F
+    all_users = Insta.objects.all().extra(select={f'{type}': f'CAST({type} AS INTEGER)'},
+                                          order_by=[f'{type}']).reverse()
+    json_users = []
+    for user in all_users.values():
+        json_users.append({
+            'name': user['kuladi'],
+            'y': int(user[type])
+        })
+    return JsonResponse(json_users, safe=False)
 
 
+def statistic_charts(request):
+    return render(request, 'total_statistics.html')
