@@ -7,7 +7,7 @@ istatistik grafik dökümü alınabilir.
 
 /////KURULUM//////
 
-1- git clone https://github.com/kmprens/instapanel
+1- git clone https://github.com/kmprens/instapanel.git
 
 2- virtual aktif edilecek.
 
